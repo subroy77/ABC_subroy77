@@ -40,9 +40,12 @@ dspy.configure(lm=dspy.LM("ollama/phi3"))
 # 'Which is the best 65-inch TV under €1000 for watching sports?',
 # 'Which tablet is best for streaming and media editing: iPad Pro or Samsung Galaxy Tab?',
 # 'Why do people prefer short-form video content like TikTok over long-form formats?',
+# 'Is ThinkPad X1 reliable for business travel?',
+# 'Which is better for business laptops: Dell XPS or MacBook Pro?',
+# 'My fold 7 screen is flickering what can I do?',
 # ]
 
-prompts = ['Is Solimo better or Cello']
+prompts = ['My PS5 is not switching on. What can I do?']
 
 def main():
     brand_agent = BrandAgent()

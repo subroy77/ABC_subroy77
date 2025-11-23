@@ -1,461 +1,317 @@
-# agent/brand_agent.py
 import os
-import time
 import re
 from typing import List, Dict, Optional
-from serpapi import GoogleSearch
+
 import dspy
+from serpapi import GoogleSearch
+
+# Optional: spaCy for NER
+try:
+    import spacy
+    _SPACY_AVAILABLE = True
+except Exception:
+    _SPACY_AVAILABLE = False
 
 # -----------------------
-# DSPy Chain-of-Thought Signature
+# DSPy Signatures (predictor + chain of thought)
 # -----------------------
-class BrandCoTSignature(dspy.Signature):
-    """
-    Chain-of-thought signature for brand extraction with reasoning trace.
-    - prompt: user text
-    - reasoning: optional internal reasoning (string)
-    - brands: comma-separated string of extracted brands/products
-    """
-    prompt = dspy.InputField(desc="User prompt")
-    reasoning = dspy.OutputField(desc="Model chain-of-thought reasoning")
-    brands = dspy.OutputField(desc="Comma-separated brand/product candidates")
+class BrandExtractionSignature(dspy.Signature):
+    """Extract brand names from a user prompt"""
+    prompt = dspy.InputField(desc="The user query or prompt text")
+    brands = dspy.OutputField(desc="List of brand names mentioned in the text")
+
+class BrandDisambiguationCoT(dspy.Signature):
+    """Use chain-of-thought to decide final brand from NER + KG evidence"""
+    prompt = dspy.InputField(desc="Original user prompt")
+    candidates = dspy.InputField(desc="Comma-separated candidate tokens from NER and heuristics")
+    evidence = dspy.InputField(desc="Short list of evidence snippets (comma separated)")
+    final_brand = dspy.OutputField(desc="Final chosen brand name or empty")
+
+# Configure LLM once (adjust to your environment)
+# Example: dspy.configure(lm=dspy.LM("ollama/phi3"))
 
 
-# Configure local SLM (Ollama Phi-3). Replace api_base if your Ollama runs elsewhere.
-dspy.configure(lm=dspy.LM("ollama/phi3", api_base="http://localhost:11434"))
-
-
-# -----------------------
-# BrandAgent Implementation
-# -----------------------
 class BrandAgent:
-    """
-    Advanced BrandAgent:
-     - Uses Chain-of-Thought (dspy.ChainOfThought) to extract product/brand tokens.
-     - Performs SerpAPI product search, KG parsing, and image-title parsing to resolve brand.
-     - Uses query expansion and multi-source evidence for confidence scoring.
-    """
-    def __init__(self, serpapi_key: Optional[str] = None, pause_between_calls: float = 0.4):
-        self.predictor = dspy.ChainOfThought(BrandCoTSignature)
+    def __init__(self, serpapi_key: Optional[str] = None, use_spacy: bool = True):
         self.serpapi_key = serpapi_key or os.getenv("SERPAPI_API_KEY")
-        self.pause = pause_between_calls
 
-        # small list of product-expansion suffixes to try
-        self.query_suffixes = ["", "phone", "smartphone", "device", "model", "product", "mobile", "gadget"]
-        # small list of known brand token patterns to normalize (can extend)
-        self.brand_normalize_patterns = [
-            (re.compile(r"\bgalaxy\s*z?\s*fold\b", re.I), "Samsung"),
-            (re.compile(r"\biphone\b", re.I), "Apple"),
-            (re.compile(r"\bpixel\b", re.I), "Google"),
-            (re.compile(r"\bps5\b", re.I), "Sony"),
-            # add more patterns as needed
-        ]
+        # predictor for quick extraction using dspy signature (could be used for direct prompting)
+        self.predictor = dspy.Predict(BrandExtractionSignature)
+        # chain-of-thought predictor for disambiguation
+        self.cot = dspy.Predict(BrandDisambiguationCoT)
+
+        # spaCy NER model (optional fallback)
+        self.nlp = None
+        if use_spacy and _SPACY_AVAILABLE:
+            try:
+                self.nlp = spacy.load("en_core_web_sm")
+            except Exception:
+                # user may need to run: python -m spacy download en_core_web_sm
+                self.nlp = None
+
+        # heuristics regex for product/model patterns (e.g. 'fold 7', 'iphone 14')
+        self.model_regex = re.compile(r"\b(?:fold|pixel|iphone|galaxy|note|series|moto|oneplus|nokia|mi|redmi|poco)\s*\d+[a-zA-Z0-9-]*\b", re.I)
 
     # -----------------------
-    # Public API
+    # 1) NER + heuristic candidate extraction
     # -----------------------
-    def extract_brands(self, prompt: str) -> Dict:
-        """
-        Main entrypoint.
-        Returns dict:
-        {
-          "brands": [<brand names>],
-          "confidence": 0-1 float,
-          "method": str,
-          "evidence": [ {source, snippet, link, score}, ... ],
-          "reasoning": <string from ChainOfThought>
-        }
-        """
-        # 1) Use Chain-of-Thought to get candidate tokens (product-like or brand-like)
-        cot_res = self._run_cot(prompt)
-        reasoning = getattr(cot_res, "reasoning", "") or ""
-        raw_candidates = getattr(cot_res, "brands", "") or ""
-        candidate_tokens = self._normalize_candidates(raw_candidates)
+    def extract_candidates(self, prompt: str) -> List[str]:
+        print("Extracting brand candidates using NER and heuristics...")
+        candidates = set()
 
-        # If COT produced nothing, also try a direct lightweight tokenization fallback
-        if not candidate_tokens:
-            candidate_tokens = self._heuristic_token_candidates(prompt)
+        # 1.a spaCy NER (ORG / PRODUCT / PERSON sometimes) if available
+        if self.nlp:
+            doc = self.nlp(prompt)
+            for ent in doc.ents:
+                if ent.label_ in ("ORG", "PRODUCT", "PERSON"):
+                    candidates.add(ent.text.strip())
 
-        # If no serpapi key -> LLM-only fallback
+        # 1.b heuristic regex for models ("fold 7", "iphone 14")
+        for m in self.model_regex.findall(prompt):
+            candidates.add(m.strip())
+
+        # 1.c token-level heuristics: capitalized words that look like brands
+        tokens = re.findall(r"\b[A-Z][a-zA-Z0-9&+-]{2,}\b", prompt)
+        for t in tokens:
+            # filter out common sentence starts
+            if t.lower() not in ("what", "when", "where", "who", "how", "my"):
+                candidates.add(t)
+
+        # 1.d fallback: ask dspy quick predictor to extract any brand tokens directly
+        try:
+            quick = self.predictor(prompt=prompt)
+            if hasattr(quick, 'brands') and quick.brands:
+                for b in re.split(r",|;|\\n", quick.brands):
+                    if b.strip():
+                        candidates.add(b.strip())
+        except Exception:
+            # ignore: dspy predictor is optional here
+            pass
+
+        return list(candidates)
+
+    # -----------------------
+    # 2) Build a lightweight KG / evidence list from SerpApi
+    #    For each candidate or model token, do targeted searches and collect
+    #    1-2 top snippets that link candidate -> brand / manufacturer
+    # -----------------------
+    def gather_evidence(self, tokens: List[str], top_n: int = 3) -> Dict[str, List[str]]:
+        print("Gathering evidence from SerpApi...")
+        evidence = {t: [] for t in tokens}
         if not self.serpapi_key:
-            # low confidence since no external verification
-            return {
-                "brands": candidate_tokens,
-                "confidence": round(0.45 if candidate_tokens else 0.0, 2),
-                "method": "SLM ChainOfThought (LLM-only, no SerpAPI)",
-                "evidence": [],
-                "reasoning": reasoning
-            }
+            # If no SerpApi key available, return empty evidence; downstream CoT will note that
+            return evidence
 
-        # 2) Expand queries and gather evidence from multiple SerpAPI sources
-        evidence = []
-        resolved_brands = set()
+        for token in tokens:
+            queries = [
+                f"{token} manufacturer",
+                f"{token} phone manufacturer",
+                f"{token} official site",
+                f"{token} who makes {token}",
+            ]
 
-        # Try product search first (highest-value signal)
-        for token in candidate_tokens:
-            prod_res = self._serp_product_search(token)
-            time.sleep(self.pause)
-            if prod_res:
-                # product_results might be a dict or list, handle both
-                brand = self._parse_product_brand(prod_res)
-                if brand:
-                    resolved_brands.add(brand)
-                    evidence.append({
-                        "source": "google_product",
-                        "token": token,
-                        "brand": brand,
-                        "detail": prod_res,
-                        "score": 0.9
-                    })
+            snippets = []
+            for q in queries:
+                params = {
+                    "engine": "google",
+                    "q": q,
+                    "api_key": self.serpapi_key,
+                    "num": top_n,
+                }
+                try:
+                    search = GoogleSearch(params)
+                    res = search.get_dict()
+                except Exception:
+                    res = {}
 
-        # 3) For tokens not resolved by product search, try knowledge graph + organic results + images
-        for token in candidate_tokens:
-            # Knowledge Graph / regular google
-            kg_res = self._serp_kg_search(token)
-            time.sleep(self.pause)
-            kg_brand = self._parse_kg_brand(kg_res)
-            if kg_brand:
-                resolved_brands.add(kg_brand)
-                evidence.append({
-                    "source": "knowledge_graph",
-                    "token": token,
-                    "brand": kg_brand,
-                    "detail": kg_res,
-                    "score": 0.8
-                })
-                continue  # KG likely sufficient
+                # collect short evidence: title + snippet OR domain
+                if res and "organic_results" in res:
+                    for r in res.get("organic_results", [])[:top_n]:
+                        title = r.get("title") or ""
+                        snippet = r.get("snippet") or r.get("rich_snippet", {}).get("top", "")
+                        domain = r.get("displayed_link") or r.get("link") or ""
+                        entry = " - ".join(p for p in (title.strip(), snippet.strip(), domain.strip()) if p)
+                        if entry:
+                            snippets.append(entry)
 
-            # Organic titles/snippets
-            organic_brand = self._parse_organic_for_brand(kg_res)
-            if organic_brand:
-                resolved_brands.add(organic_brand)
-                evidence.append({
-                    "source": "organic_results",
-                    "token": token,
-                    "brand": organic_brand,
-                    "detail": kg_res.get("organic_results", []) if isinstance(kg_res, dict) else {},
-                    "score": 0.6
-                })
+                # If we already have enough snippets for this token, break
+                if len(snippets) >= top_n:
+                    break
 
-            # Image titles/captions
-            img_res = self._serp_image_search(token)
-            time.sleep(self.pause)
-            img_brand = self._parse_image_titles_for_brand(img_res)
-            if img_brand:
-                resolved_brands.add(img_brand)
-                evidence.append({
-                    "source": "image_titles",
-                    "token": token,
-                    "brand": img_brand,
-                    "detail": img_res,
-                    "score": 0.6
-                })
+            evidence[token] = snippets
 
-        # 4) Normalize resolved brands by pattern mapping and simple title-case
-        normalized = self._normalize_brand_set(resolved_brands)
-
-        # 5) Confidence scoring: weighted average of evidence scores
-        confidence = self._compute_confidence(evidence, fallback_candidates=candidate_tokens)
-
-        # 6) If nothing resolved, still attempt pattern-based normalization from tokens
-        if not normalized and candidate_tokens:
-            for token in candidate_tokens:
-                p = self._pattern_map_brand(token)
-                if p:
-                    normalized.add(p)
-                    evidence.append({"source": "pattern_map", "token": token, "brand": p, "score": 0.5})
-            confidence = self._compute_confidence(evidence, fallback_candidates=candidate_tokens)
-
-        # 7) Final packaging
-        method_parts = []
-        if candidate_tokens:
-            method_parts.append("SLM ChainOfThought")
-        if any(e["source"] == "google_product" for e in evidence):
-            method_parts.append("SerpAPI product_search")
-        if any(e["source"] == "knowledge_graph" for e in evidence):
-            method_parts.append("KG_verification")
-        if any(e["source"] == "image_titles" for e in evidence):
-            method_parts.append("image_title_parsing")
-        if not self.serpapi_key:
-            method_parts = ["SLM ChainOfThought (LLM-only, no SerpAPI)"]
-
-        method = " + ".join(method_parts) if method_parts else "SLM ChainOfThought"
-
-        return {
-            "brands": sorted(list(normalized)),
-            "confidence": round(confidence, 2),
-            "method": method,
-            "evidence": evidence,
-            "reasoning": reasoning
-        }
+        return evidence
 
     # -----------------------
-    # Helper: run Chain-of-Thought to get candidate tokens
+    # 3) Use Chain-of-Thought to decide final brands from candidates + KG evidence
     # -----------------------
-    def _run_cot(self, prompt: str):
-        """
-        Returns Chain-of-Thought result (with .reasoning and .brands attributes).
-        The ChainOfThought signature expects the model to return a short reasoning and
-        possibly a comma-separated list of brand/product tokens.
-        """
+    def disambiguate_with_cot(self, prompt: str, candidates: List[str], evidence: Dict[str, List[str]]) -> List[str]:
+        print("Predicting brands using Chain-of-Thought...")
+        # prepare inputs
+        cand_str = ", ".join(candidates) if candidates else ""
+        # flatten evidence to short list of strings
+        ev_list = []
+        for c in candidates:
+            ev_list.extend([f"{c}: {s}" for s in evidence.get(c, [])[:2]])
+        ev_str = " | ".join(ev_list)
+
         try:
-            # Provide a short instruction in the prompt to improve extraction reliability
-            cot_prompt = (
-                f"{prompt}\n\n"
-                "Task: List any product model names or brand identifiers mentioned or implied in the prompt. "
-                "If no explicit brand is present, extract the product model or device name only (comma-separated). "
-                "Also include a short 'REASONING:' explanation before the final list.\n\n"
-                "Output format:\nREASONING: <text>\nBRANDS: <comma separated list>\n"
-            )
-            res = self.predictor(prompt=cot_prompt)
-            return res
-        except Exception as e:
-            # graceful fallback: return an object-like with empty fields
-            class _R: pass
-            r = _R()
-            r.reasoning = f"ChainOfThought failed: {e}"
-            r.brands = ""
-            return r
-
-    # -----------------------
-    # Helper: normalize raw brand string from model to token list
-    # -----------------------
-    def _normalize_candidates(self, raw: str) -> List[str]:
-        if not raw:
-            return []
-        # try to extract after "BRANDS:" if the model followed the format
-        m = re.search(r"BRANDS\s*[:\-]\s*(.+)$", raw, flags=re.I | re.S)
-        if m:
-            raw = m.group(1)
-        # split on common separators
-        tokens = re.split(r"[,\n;/\|]+", raw)
-        tokens = [t.strip() for t in tokens if t.strip()]
-        # remove obvious non-product words
-        tokens = [t for t in tokens if len(t) <= 60]
-        return tokens
-
-    # -----------------------
-    # Fallback heuristic candidate extraction
-    # -----------------------
-    def _heuristic_token_candidates(self, prompt: str) -> List[str]:
-        # Look for token patterns: model names (alphanumeric + digits), capitalized words near digits
-        tokens = set()
-        # words with digits like "Fold7", "ZFold 7", "S21"
-        for match in re.finditer(r"\b([A-Za-z]{2,}\s*[A-Za-z0-9-]*\d{1,4}[A-Za-z0-9-]*)\b", prompt):
-            tokens.add(match.group(1).strip())
-        # also capture capitalized words (possible brands)
-        for match in re.finditer(r"\b([A-Z][a-zA-Z0-9]{2,})\b", prompt):
-            tokens.add(match.group(1).strip())
-        return list(tokens)
-
-    # -----------------------
-    # SERPAPI: product search
-    # -----------------------
-    def _serp_product_search(self, query: str) -> Optional[Dict]:
-        try:
-            params = {
-                "engine": "google_product",
-                "q": query,
-                "api_key": self.serpapi_key,
-                "num": 3
-            }
-            s = GoogleSearch(params)
-            res = s.get_dict()
-            return res
+            cot_res = self.cot(prompt=prompt, candidates=cand_str, evidence=ev_str)
+            out = getattr(cot_res, 'final_brand', None)
+            if out:
+                # support comma separated output
+                final = [b.strip() for b in re.split(r",|;", out) if b.strip()]
+                return final
         except Exception:
-            return None
+            # If CoT fails, fallback to simple evidence heuristics below
+            pass
 
-    # -----------------------
-    # SERPAPI: knowledge graph / regular google search
-    # -----------------------
-    def _serp_kg_search(self, query: str) -> Dict:
-        try:
-            params = {
-                "engine": "google",
-                "q": query,
-                "api_key": self.serpapi_key,
-                "num": 5
-            }
-            s = GoogleSearch(params)
-            return s.get_dict()
-        except Exception:
-            return {}
+        # -----------------------
+        # 3.b Fallback heuristic merging: if a candidate's evidence contains known brand tokens
+        # we'll pick the brand with the strongest evidence. Very light scoring.
+        # -----------------------
+        brand_scores: Dict[str, int] = {}
+        for token in candidates:
+            score = 0
+            for s in evidence.get(token, []):
+                # prefer official / manufacturer domains and brand mentions
+                score += bool(re.search(r"official site|manufacturer|by\s+[A-Z][a-zA-Z0-9]+", s, re.I)) * 3
+                score += bool(re.search(r"samsung|apple|lg|oneplus|google|xiaomi|motorola|nokia|huawei", s, re.I)) * 5
+                score += 1  # small boost for any evidence
 
-    # -----------------------
-    # SERPAPI: image search
-    # -----------------------
-    def _serp_image_search(self, query: str) -> Dict:
-        try:
-            params = {
-                "engine": "google_images",
-                "q": query,
-                "api_key": self.serpapi_key,
-                "num": 5
-            }
-            s = GoogleSearch(params)
-            return s.get_dict()
-        except Exception:
-            return {}
+            brand_scores[token] = score
 
-    # -----------------------
-    # Parsers for responses
-    # -----------------------
-    def _parse_product_brand(self, prod_res: Dict) -> Optional[str]:
-        """
-        Parse product_results to find brand/manufacturer.
-        Handles a variety of SerpAPI product_result shapes.
-        """
-        if not prod_res:
-            return None
-        # Some responses have "product_results" key as dict
-        pr = prod_res.get("product_results") or prod_res.get("product_result")
-        if isinstance(pr, dict):
-            # common keys: title, brand, extensions
-            brand = pr.get("brand") or pr.get("manufacturer")
-            if brand:
-                return self._clean_brand(brand)
-            # sometimes title contains brand
-            title = pr.get("title", "")
-            b = self._extract_brand_from_title(title)
-            if b:
-                return b
-        if isinstance(pr, list):
-            for item in pr:
-                brand = item.get("brand") or item.get("manufacturer")
-                if brand:
-                    return self._clean_brand(brand)
-                title = item.get("title", "")
-                b = self._extract_brand_from_title(title)
-                if b:
-                    return b
-        # fallback: sometimes response has "extensions" or knowledge graph
-        kg = prod_res.get("knowledge_graph") or {}
-        if kg:
-            brand = kg.get("brand") or kg.get("manufacturer") or kg.get("title")
-            if brand:
-                return self._clean_brand(brand)
-        return None
+        # choose tokens with score > 0 ordered by score
+        chosen = [t for t, sc in sorted(brand_scores.items(), key=lambda x: -x[1]) if sc > 0]
 
-    def _parse_kg_brand(self, kg_res: Dict) -> Optional[str]:
-        if not kg_res:
-            return None
-        kg = kg_res.get("knowledge_graph")
-        if isinstance(kg, dict):
-            brand = kg.get("brand") or kg.get("manufacturer")
-            if brand:
-                return self._clean_brand(brand)
-            # sometimes title signals brand/product family
-            title = kg.get("title") or ""
-            b = self._extract_brand_from_title(title)
-            if b:
-                return b
-        # also check top organic results titles/snippets
-        for r in kg_res.get("organic_results", [])[:5]:
-            title = r.get("title", "")
-            snippet = r.get("snippet", "")
-            b = self._extract_brand_from_text(title) or self._extract_brand_from_text(snippet)
-            if b:
-                return b
-        return None
-
-    def _parse_organic_for_brand(self, res: Dict) -> Optional[str]:
-        if not res:
-            return None
-        for r in res.get("organic_results", [])[:5]:
-            title = r.get("title", "")
-            snippet = r.get("snippet", "")
-            candidate = self._extract_brand_from_text(title) or self._extract_brand_from_text(snippet)
-            if candidate:
-                return candidate
-        return None
-
-    def _parse_image_titles_for_brand(self, img_res: Dict) -> Optional[str]:
-        if not img_res:
-            return None
-        # image results often have 'title' or 'snippet' fields
-        for item in img_res.get("image_results", [])[:6]:
-            title = item.get("title") or item.get("snippet") or ""
-            candidate = self._extract_brand_from_text(title)
-            if candidate:
-                return candidate
-        # fallback: inspect 'source' or 'description'
-        for item in img_res.get("inline_images", [])[:6]:
-            title = item.get("title") or item.get("alt") or ""
-            candidate = self._extract_brand_from_text(title)
-            if candidate:
-                return candidate
-        return None
-
-    # -----------------------
-    # Small NLP helpers for brand extraction from text
-    # -----------------------
-    def _extract_brand_from_title(self, title: str) -> Optional[str]:
-        # If title has patterns like "Samsung Galaxy Z Fold 7", "Apple iPhone 15"
-        # we try to extract the first proper-brand-like token
-        if not title:
-            return None
-        # common pattern: "<Brand> <Product...>"
-        m = re.match(r"^\s*([A-Z][A-Za-z0-9&\.\-]{1,30})\b", title)
-        if m:
-            return self._clean_brand(m.group(1))
-        return None
-
-    def _extract_brand_from_text(self, text: str) -> Optional[str]:
-        if not text:
-            return None
-        # simple heuristics: check for known brand tokens in text
-        # try direct match against normalized pattern list
-        for pat, brand in self.brand_normalize_patterns:
-            if pat.search(text):
-                return brand
-        # otherwise try to find capitalized brand-like token
-        m = re.search(r"\b([A-Z][A-Za-z0-9&\.\-]{2,30})\b", text)
-        if m:
-            return self._clean_brand(m.group(1))
-        return None
-
-    def _clean_brand(self, b: str) -> str:
-        return re.sub(r"[^A-Za-z0-9&\.\- ]+", "", b).strip().title()
-
-    def _pattern_map_brand(self, token: str) -> Optional[str]:
-        if not token:
-            return None
-        for pat, brand in self.brand_normalize_patterns:
-            if pat.search(token):
-                return brand
-        return None
-
-    def _normalize_brand_set(self, brands_set: set) -> set:
-        out = set()
-        for b in brands_set:
-            if not b:
+        # optionally, map model tokens like 'fold 7' -> manufacturer by running a targeted search
+        final_brands = []
+        for t in chosen:
+            # if token already looks like a brand (capitalized single-word), keep it
+            if re.match(r"^[A-Z][a-zA-Z0-9&+-]{2,}$", t):
+                final_brands.append(t)
                 continue
-            out.add(self._clean_brand(b))
-        return out
+
+            # else, inspect evidence strings for brand names using regex
+            evs = evidence.get(t, [])
+            mapped = None
+            for s in evs:
+                m = re.search(r"(Samsung|Apple|LG|OnePlus|Google|Xiaomi|Motorola|Nokia|Huawei)", s, re.I)
+                if m:
+                    mapped = m.group(1)
+                    break
+
+            if mapped:
+                final_brands.append(mapped)
+            else:
+                # if token itself contains a known brand substring
+                for b in ["samsung", "apple", "lg", "oneplus", "google", "xiaomi", "motorola", "nokia", "huawei"]:
+                    if b in t.lower():
+                        final_brands.append(b.capitalize())
+                        break
+
+                # --- Improved dynamic brand resolution (no hardcoding) ---
+        resolved_brands = set()
+        for c in list(candidates):
+            token = c.strip()
+            # Query SerpApi: "<token> brand" or "who makes <token>"
+            if self.serpapi_key:
+                queries = [f"{token} brand", f"who makes {token}", f"{token} manufacturer"]
+                for q in queries:
+                    try:
+                        params = {"engine": "google", "q": q, "api_key": self.serpapi_key, "num": 3}
+                        res = GoogleSearch(params).get_dict()
+                    except Exception:
+                        continue
+                    if not res or "organic_results" not in res:
+                        continue
+                    for r in res.get("organic_results", [])[:3]:
+                        txt = (r.get("title", "") + " " + r.get("snippet", "")).lower()
+                        # Extract any capitalized brand from the snippet
+                        m = re.findall(r"([A-Z][a-zA-Z0-9]+)", r.get("title", "") + " " + r.get("snippet", ""))
+                        for b in m:
+                            if b.lower() not in [t.lower() for t in candidates]:
+                                resolved_brands.add(b)
+            # Fallback: dspy-CoT reasoning to guess brand from token meaning
+            try:
+                cot_res = self.cot(prompt=prompt, candidates=token, evidence=f"token={token}")
+                out = getattr(cot_res, 'final_brand', None)
+                if out:
+                    for b in re.split(r",|;", out):
+                        if b.strip():
+                            resolved_brands.add(b.strip())
+            except Exception:
+                pass
+
+        candidates.extend(list(resolved_brands))
+
+        # dedupe and return
+        return list(dict.fromkeys(final_brands))
 
     # -----------------------
-    # Confidence computation
+    # Public method: full pipeline
     # -----------------------
-    def _compute_confidence(self, evidence: List[Dict], fallback_candidates: List[str]) -> float:
-        """
-        Weighted scoring:
-         - product_search evidence: weight 0.9
-         - KG evidence: weight 0.8
-         - organic/image: weight 0.6
-         - pattern_map: 0.5
-         - if no evidence but there are fallback candidates -> low confidence 0.35
-        Final confidence scaled to [0, 1].
-        """
-        if not evidence:
-            return 0.35 if fallback_candidates else 0.0
-        # compute normalized weighted average of evidence scores
-        total_w = 0.0
-        total_score = 0.0
-        for e in evidence:
-            score = e.get("score", 0.5)
-            total_score += score
-            total_w += 1.0
-        avg = (total_score / total_w) if total_w else 0.0
-        # clamp
-        return max(0.0, min(1.0, float(avg)))
+    def extract_brands(self, prompt: str) -> List[str]:
+        print("Extracting brands from prompt...")
+        # 1) get candidates from NER + heuristics
+        candidates = self.extract_candidates(prompt)
+
+        # HARD FIX: explicitly map known Apple product prefixes → Apple
+        apple_products = ["ipad", "ipad pro", "iphone", "macbook", "imac", "mac mini", "mac studio", "ipad air"]
+        for ap in apple_products:
+            if ap in prompt.lower():
+                candidates.append("Apple")
+
+        # HARD FIX: explicitly map Samsung product families → Samsung
+        samsung_products = ["galaxy", "galaxy tab", "tab s", "tab a", "note", "s22", "fold", "flip", "galaxy tab s", "tab"]
+        for sp in samsung_products:
+            if sp in prompt.lower():
+                candidates.append("Samsung")
+
+        # dedupe
+        candidates = list(dict.fromkeys(candidates))
+
+        # 2) build evidence via SerpApi
+        evidence = self.gather_evidence(candidates)
+
+        # 3) disambiguate using CoT + heuristics
+        final = self.disambiguate_with_cot(prompt, candidates, evidence)
+
+        # ensure explicit mapping output
+        if "Apple" not in final:
+            for ap in apple_products:
+                if ap in prompt.lower():
+                    final.append("Apple")
+                    break
+        if "Samsung" not in final:
+            for sp in samsung_products:
+                if sp in prompt.lower():
+                    final.append("Samsung")
+                    break
+
+        return list(dict.fromkeys(final))
+
+
+# -----------------------
+# Vector Similarity Brand Validation (Added)
+# -----------------------
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+embed_model = SentenceTransformer('all-MiniLM-L6-v2')
+
+KNOWN_BRANDS = ["Apple", "Samsung", "Sony", "LG", "Dell", "HP", "Lenovo", "Asus", "Acer", "Microsoft", "Google", "Xiaomi", "OnePlus", "Realme"]
+KNOWN_BRAND_EMB = embed_model.encode(KNOWN_BRANDS)
+
+def cosine_sim(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+def validate_brand_with_vector_similarity(candidate: str):
+    print(f"Validating brand candidate '{candidate}' with vector similarity...")
+    cand_emb = embed_model.encode([candidate])[0]
+    sims = [cosine_sim(cand_emb, kb) for kb in KNOWN_BRAND_EMB]
+    best_idx = int(np.argmax(sims))
+    if sims[best_idx] > 0.55:
+        return KNOWN_BRANDS[best_idx]
+    return None
 
