@@ -1,0 +1,186 @@
+{
+    "examples": [
+        {
+            "prompt": "Is Fold7 good phone for working professional",
+            "expected_brands": [
+                "Samsung"
+            ],
+            "category": "Electronics"
+        },
+        {
+            "prompt": "Compare iPhone 15 Pro Max with Pixel 8 Pro camera quality",
+            "expected_brands": [
+                "Apple",
+                "Google"
+            ],
+            "category": "Electronics"
+        },
+        {
+            "prompt": "How does Galaxy S24 camera compare to OnePlus 12?",
+            "expected_brands": [
+                "Samsung",
+                "OnePlus"
+            ],
+            "category": "Electronics"
+        },
+        {
+            "prompt": "Should I buy ThinkPad X1 Carbon or XPS 15 for coding?",
+            "expected_brands": [
+                "Lenovo",
+                "Dell"
+            ],
+            "category": "Electronics"
+        },
+        {
+            "prompt": "Is ThinkPad X1 reliable for business travel?",
+            "expected_brands": [
+                "Lenovo"
+            ],
+            "category": "Electronics"
+        },
+        {
+            "prompt": "Is the KitchenAid stand mixer better than Cuisinart for baking?",
+            "expected_brands": [
+                "KitchenAid",
+                "Cuisinart"
+            ],
+            "category": "Electronics"
+        },
+        {
+            "prompt": "Should I get Ninja air fryer or Philips for healthy cooking?",
+            "expected_brands": [
+                "Ninja",
+                "Philips"
+            ],
+            "category": "Electronics"
+        },
+        {
+            "prompt": "Should I buy Air Fryer XXL or Vortex Plus for family cooking?",
+            "expected_brands": [
+                "Philips",
+                "Instant Pot"
+            ],
+            "category": "Kitchenware & Appliances"
+        },
+        {
+            "prompt": "Dyson vacuum vs Shark which is better for pet hair?",
+            "expected_brands": [
+                "Dyson",
+                "Shark"
+            ],
+            "category": "Household"
+        },
+        {
+            "prompt": "Compare Vim and Pril dishwashing liquid effectiveness",
+            "expected_brands": [
+                "Vim",
+                "Pril"
+            ],
+            "category": "Household"
+        },
+        {
+            "prompt": "Is Surf Excel better than Tide for removing tough stains?",
+            "expected_brands": [
+                "Surf Excel",
+                "Tide"
+            ],
+            "category": "Household"
+        },
+        {
+            "prompt": "Lakme foundation or Maybelline which suits oily skin better?",
+            "expected_brands": [
+                "Lakme",
+                "Maybelline"
+            ],
+            "category": "Cosmetics"
+        },
+        {
+            "prompt": "Should I try Neutrogena face wash or Cetaphil for sensitive skin?",
+            "expected_brands": [
+                "Neutrogena",
+                "Cetaphil"
+            ],
+            "category": "Cosmetics"
+        },
+        {
+            "prompt": "Which shampoo is better for dandruff: Head & Shoulders or Dove?",
+            "expected_brands": [
+                "Head & Shoulders",
+                "Dove"
+            ],
+            "category": "Cosmetics"
+        },
+        {
+            "prompt": "L'Oreal Paris vs MAC lipstick for long-lasting wear",
+            "expected_brands": [
+                "L'Oreal",
+                "MAC"
+            ],
+            "category": "Cosmetics"
+        },
+        {
+            "prompt": "Is Britannia Marie better than Parle-G for tea time snacks?",
+            "expected_brands": [
+                "Britannia",
+                "Parle"
+            ],
+            "category": "FMCG"
+        },
+        {
+            "prompt": "Compare Coca-Cola and Pepsi taste for parties",
+            "expected_brands": [
+                "Coca-Cola",
+                "Pepsi"
+            ],
+            "category": "FMCG"
+        },
+        {
+            "prompt": "Which instant noodles taste better: Maggi or Top Ramen?",
+            "expected_brands": [
+                "Maggi",
+                "Top Ramen"
+            ],
+            "category": "FMCG"
+        },
+        {
+            "prompt": "Amul butter vs Mother Dairy for daily breakfast use",
+            "expected_brands": [
+                "Amul",
+                "Mother Dairy"
+            ],
+            "category": "FMCG"
+        },
+        {
+            "prompt": "Is Tropicana juice healthier than Real fruit juice?",
+            "expected_brands": [
+                "Tropicana",
+                "Real"
+            ],
+            "category": "FMCG"
+        },
+        {
+            "prompt": "Colgate Total vs Sensodyne for sensitive teeth protection",
+            "expected_brands": [
+                "Colgate",
+                "Sensodyne"
+            ],
+            "category": "Personal Care"
+        },
+        {
+            "prompt": "Should I buy Dettol or Lifebuoy soap for antibacterial protection?",
+            "expected_brands": [
+                "Dettol",
+                "Lifebuoy"
+            ],
+            "category": "Personal Care"
+        },
+        {
+            "prompt": "Gillette razors vs Schick which gives smoother shave?",
+            "expected_brands": [
+                "Gillette",
+                "Schick"
+            ],
+            "category": "Personal Care"
+        }
+    ]
+}

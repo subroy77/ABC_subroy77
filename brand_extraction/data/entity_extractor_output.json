@@ -1,0 +1,3296 @@
+[
+  {
+    "prompt": "Is Fold7 good phone for working professional",
+    "expected_brands": [
+      "Samsung"
+    ],
+    "category": "Electronics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Fold7",
+          "lemma": "Fold7",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nsubj",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "good",
+          "lemma": "good",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "phone",
+          "lemma": "phone",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "attr",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "working",
+          "lemma": "work",
+          "pos": "VERB",
+          "tag": "VBG",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "professional",
+          "lemma": "professional",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Fold7",
+          "label": "PRODUCT",
+          "start": 3,
+          "end": 8
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Is"
+        ],
+        "PROPN": [
+          "Fold7"
+        ],
+        "ADJ": [
+          "good"
+        ],
+        "NOUN": [
+          "phone",
+          "professional"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "VERB": [
+          "working"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Compare iPhone 15 Pro Max with Pixel 8 Pro camera quality",
+    "expected_brands": [
+      "Apple",
+      "Google"
+    ],
+    "category": "Electronics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Compare",
+          "lemma": "compare",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "iPhone",
+          "lemma": "iPhone",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "15",
+          "lemma": "15",
+          "pos": "NUM",
+          "tag": "CD",
+          "dep": "compound",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Pro",
+          "lemma": "Pro",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Max",
+          "lemma": "Max",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "with",
+          "lemma": "with",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Pixel",
+          "lemma": "Pixel",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "8",
+          "lemma": "8",
+          "pos": "NUM",
+          "tag": "CD",
+          "dep": "compound",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Pro",
+          "lemma": "Pro",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "camera",
+          "lemma": "camera",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "quality",
+          "lemma": "quality",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "iPhone 15 Pro Max",
+          "label": "PRODUCT",
+          "start": 8,
+          "end": 25
+        },
+        {
+          "text": "Pixel 8 Pro",
+          "label": "PRODUCT",
+          "start": 31,
+          "end": 42
+        }
+      ],
+      "pos": {
+        "VERB": [
+          "Compare"
+        ],
+        "PROPN": [
+          "iPhone",
+          "Pro",
+          "Max",
+          "Pixel",
+          "Pro"
+        ],
+        "NUM": [
+          "15",
+          "8"
+        ],
+        "ADP": [
+          "with"
+        ],
+        "NOUN": [
+          "camera",
+          "quality"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "How does Galaxy S24 camera compare to OnePlus 12?",
+    "expected_brands": [
+      "Samsung",
+      "OnePlus"
+    ],
+    "category": "Electronics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "How",
+          "lemma": "how",
+          "pos": "SCONJ",
+          "tag": "WRB",
+          "dep": "advmod",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "does",
+          "lemma": "do",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "aux",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Galaxy",
+          "lemma": "Galaxy",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "S24",
+          "lemma": "S24",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "camera",
+          "lemma": "camera",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "compare",
+          "lemma": "compare",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "to",
+          "lemma": "to",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "OnePlus",
+          "lemma": "OnePlus",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "12",
+          "lemma": "12",
+          "pos": "NUM",
+          "tag": "CD",
+          "dep": "nummod",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Galaxy S24",
+          "label": "PRODUCT",
+          "start": 9,
+          "end": 19
+        },
+        {
+          "text": "OnePlus",
+          "label": "ORG",
+          "start": 38,
+          "end": 45
+        }
+      ],
+      "pos": {
+        "SCONJ": [
+          "How"
+        ],
+        "AUX": [
+          "does"
+        ],
+        "PROPN": [
+          "Galaxy",
+          "S24",
+          "OnePlus"
+        ],
+        "NOUN": [
+          "camera"
+        ],
+        "VERB": [
+          "compare"
+        ],
+        "ADP": [
+          "to"
+        ],
+        "NUM": [
+          "12"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Should I buy ThinkPad X1 Carbon or XPS 15 for coding?",
+    "expected_brands": [
+      "Lenovo",
+      "Dell"
+    ],
+    "category": "Electronics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Should",
+          "lemma": "should",
+          "pos": "AUX",
+          "tag": "MD",
+          "dep": "aux",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "I",
+          "lemma": "I",
+          "pos": "PRON",
+          "tag": "PRP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "buy",
+          "lemma": "buy",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "ThinkPad",
+          "lemma": "ThinkPad",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "X1",
+          "lemma": "X1",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Carbon",
+          "lemma": "Carbon",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "XPS",
+          "lemma": "XPS",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "15",
+          "lemma": "15",
+          "pos": "NUM",
+          "tag": "CD",
+          "dep": "nummod",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "coding",
+          "lemma": "coding",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "ThinkPad X1 Carbon",
+          "label": "PRODUCT",
+          "start": 13,
+          "end": 31
+        },
+        {
+          "text": "XPS 15",
+          "label": "PRODUCT",
+          "start": 35,
+          "end": 41
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Should"
+        ],
+        "PRON": [
+          "I"
+        ],
+        "VERB": [
+          "buy"
+        ],
+        "PROPN": [
+          "ThinkPad",
+          "X1",
+          "Carbon",
+          "XPS"
+        ],
+        "CCONJ": [
+          "or"
+        ],
+        "NUM": [
+          "15"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "NOUN": [
+          "coding"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Is ThinkPad X1 reliable for business travel?",
+    "expected_brands": [
+      "Lenovo"
+    ],
+    "category": "Electronics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "ThinkPad",
+          "lemma": "ThinkPad",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "X1",
+          "lemma": "X1",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nsubj",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "reliable",
+          "lemma": "reliable",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "acomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "business",
+          "lemma": "business",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "travel",
+          "lemma": "travel",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "ThinkPad X1",
+          "label": "PRODUCT",
+          "start": 3,
+          "end": 14
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Is"
+        ],
+        "PROPN": [
+          "ThinkPad",
+          "X1"
+        ],
+        "ADJ": [
+          "reliable"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "NOUN": [
+          "business",
+          "travel"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Is the KitchenAid stand mixer better than Cuisinart for baking?",
+    "expected_brands": [
+      "KitchenAid",
+      "Cuisinart"
+    ],
+    "category": "Electronics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "the",
+          "lemma": "the",
+          "pos": "DET",
+          "tag": "DT",
+          "dep": "det",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "KitchenAid",
+          "lemma": "KitchenAid",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "stand",
+          "lemma": "stand",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "mixer",
+          "lemma": "mixer",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "better",
+          "lemma": "well",
+          "pos": "ADJ",
+          "tag": "JJR",
+          "dep": "acomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "than",
+          "lemma": "than",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Cuisinart",
+          "lemma": "Cuisinart",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "baking",
+          "lemma": "baking",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "KitchenAid",
+          "label": "PRODUCT",
+          "start": 7,
+          "end": 17
+        },
+        {
+          "text": "Cuisinart",
+          "label": "PRODUCT",
+          "start": 42,
+          "end": 51
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Is"
+        ],
+        "DET": [
+          "the"
+        ],
+        "PROPN": [
+          "KitchenAid",
+          "Cuisinart"
+        ],
+        "NOUN": [
+          "stand",
+          "mixer",
+          "baking"
+        ],
+        "ADJ": [
+          "better"
+        ],
+        "ADP": [
+          "than",
+          "for"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Should I get Ninja air fryer or Philips for healthy cooking?",
+    "expected_brands": [
+      "Ninja",
+      "Philips"
+    ],
+    "category": "Electronics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Should",
+          "lemma": "should",
+          "pos": "AUX",
+          "tag": "MD",
+          "dep": "aux",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "I",
+          "lemma": "I",
+          "pos": "PRON",
+          "tag": "PRP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "get",
+          "lemma": "get",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Ninja",
+          "lemma": "Ninja",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "air",
+          "lemma": "air",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "fryer",
+          "lemma": "fryer",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Philips",
+          "lemma": "Philips",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "healthy",
+          "lemma": "healthy",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "cooking",
+          "lemma": "cooking",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Ninja",
+          "label": "PRODUCT",
+          "start": 13,
+          "end": 18
+        },
+        {
+          "text": "Philips",
+          "label": "PRODUCT",
+          "start": 32,
+          "end": 39
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Should"
+        ],
+        "PRON": [
+          "I"
+        ],
+        "VERB": [
+          "get"
+        ],
+        "PROPN": [
+          "Ninja",
+          "Philips"
+        ],
+        "NOUN": [
+          "air",
+          "fryer",
+          "cooking"
+        ],
+        "CCONJ": [
+          "or"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "ADJ": [
+          "healthy"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Should I buy Air Fryer XXL or Vortex Plus for family cooking?",
+    "expected_brands": [
+      "Philips",
+      "Instant Pot"
+    ],
+    "category": "Kitchenware & Appliances",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Should",
+          "lemma": "should",
+          "pos": "AUX",
+          "tag": "MD",
+          "dep": "aux",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "I",
+          "lemma": "I",
+          "pos": "PRON",
+          "tag": "PRP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "buy",
+          "lemma": "buy",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Air",
+          "lemma": "Air",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Fryer",
+          "lemma": "Fryer",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "XXL",
+          "lemma": "XXL",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Vortex",
+          "lemma": "Vortex",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Plus",
+          "lemma": "Plus",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "family",
+          "lemma": "family",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "cooking",
+          "lemma": "cooking",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Air Fryer XXL",
+          "label": "PRODUCT",
+          "start": 13,
+          "end": 26
+        },
+        {
+          "text": "Vortex Plus",
+          "label": "PRODUCT",
+          "start": 30,
+          "end": 41
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Should"
+        ],
+        "PRON": [
+          "I"
+        ],
+        "VERB": [
+          "buy"
+        ],
+        "PROPN": [
+          "Air",
+          "Fryer",
+          "XXL",
+          "Vortex",
+          "Plus"
+        ],
+        "CCONJ": [
+          "or"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "NOUN": [
+          "family",
+          "cooking"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Dyson vacuum vs Shark which is better for pet hair?",
+    "expected_brands": [
+      "Dyson",
+      "Shark"
+    ],
+    "category": "Household",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Dyson",
+          "lemma": "Dyson",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "vacuum",
+          "lemma": "vacuum",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "vs",
+          "lemma": "vs",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Shark",
+          "lemma": "Shark",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "which",
+          "lemma": "which",
+          "pos": "PRON",
+          "tag": "WDT",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "better",
+          "lemma": "well",
+          "pos": "ADJ",
+          "tag": "JJR",
+          "dep": "acomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "pet",
+          "lemma": "pet",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "hair",
+          "lemma": "hair",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Dyson",
+          "label": "ORG",
+          "start": 0,
+          "end": 5
+        }
+      ],
+      "pos": {
+        "PROPN": [
+          "Dyson",
+          "Shark"
+        ],
+        "NOUN": [
+          "vacuum",
+          "pet",
+          "hair"
+        ],
+        "ADP": [
+          "vs",
+          "for"
+        ],
+        "PRON": [
+          "which"
+        ],
+        "AUX": [
+          "is"
+        ],
+        "ADJ": [
+          "better"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Compare Vim and Pril dishwashing liquid effectiveness",
+    "expected_brands": [
+      "Vim",
+      "Pril"
+    ],
+    "category": "Household",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Compare",
+          "lemma": "compare",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Vim",
+          "lemma": "Vim",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "and",
+          "lemma": "and",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Pril",
+          "lemma": "Pril",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "dishwashing",
+          "lemma": "dishwashing",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "liquid",
+          "lemma": "liquid",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "effectiveness",
+          "lemma": "effectiveness",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Vim",
+          "label": "PRODUCT",
+          "start": 8,
+          "end": 11
+        },
+        {
+          "text": "Pril",
+          "label": "PRODUCT",
+          "start": 16,
+          "end": 20
+        }
+      ],
+      "pos": {
+        "VERB": [
+          "Compare"
+        ],
+        "PROPN": [
+          "Vim",
+          "Pril"
+        ],
+        "CCONJ": [
+          "and"
+        ],
+        "NOUN": [
+          "dishwashing",
+          "liquid",
+          "effectiveness"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Is Surf Excel better than Tide for removing tough stains?",
+    "expected_brands": [
+      "Surf Excel",
+      "Tide"
+    ],
+    "category": "Household",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Surf",
+          "lemma": "Surf",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Excel",
+          "lemma": "Excel",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "better",
+          "lemma": "well",
+          "pos": "ADJ",
+          "tag": "JJR",
+          "dep": "acomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "than",
+          "lemma": "than",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Tide",
+          "lemma": "Tide",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "removing",
+          "lemma": "remove",
+          "pos": "VERB",
+          "tag": "VBG",
+          "dep": "pcomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "tough",
+          "lemma": "tough",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "stains",
+          "lemma": "stain",
+          "pos": "NOUN",
+          "tag": "NNS",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Surf Excel",
+          "label": "PRODUCT",
+          "start": 3,
+          "end": 13
+        },
+        {
+          "text": "Tide",
+          "label": "PRODUCT",
+          "start": 26,
+          "end": 30
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Is"
+        ],
+        "PROPN": [
+          "Surf",
+          "Excel",
+          "Tide"
+        ],
+        "ADJ": [
+          "better",
+          "tough"
+        ],
+        "ADP": [
+          "than",
+          "for"
+        ],
+        "VERB": [
+          "removing"
+        ],
+        "NOUN": [
+          "stains"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Lakme foundation or Maybelline which suits oily skin better?",
+    "expected_brands": [
+      "Lakme",
+      "Maybelline"
+    ],
+    "category": "Cosmetics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Lakme",
+          "lemma": "Lakme",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "foundation",
+          "lemma": "foundation",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Maybelline",
+          "lemma": "Maybelline",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "which",
+          "lemma": "which",
+          "pos": "PRON",
+          "tag": "WDT",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "suits",
+          "lemma": "suit",
+          "pos": "VERB",
+          "tag": "VBZ",
+          "dep": "relcl",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "oily",
+          "lemma": "oily",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "skin",
+          "lemma": "skin",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "better",
+          "lemma": "well",
+          "pos": "ADV",
+          "tag": "RBR",
+          "dep": "advmod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Lakme",
+          "label": "ORG",
+          "start": 0,
+          "end": 5
+        },
+        {
+          "text": "Maybelline",
+          "label": "PRODUCT",
+          "start": 20,
+          "end": 30
+        }
+      ],
+      "pos": {
+        "PROPN": [
+          "Lakme",
+          "Maybelline"
+        ],
+        "NOUN": [
+          "foundation",
+          "skin"
+        ],
+        "CCONJ": [
+          "or"
+        ],
+        "PRON": [
+          "which"
+        ],
+        "VERB": [
+          "suits"
+        ],
+        "ADJ": [
+          "oily"
+        ],
+        "ADV": [
+          "better"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Should I try Neutrogena face wash or Cetaphil for sensitive skin?",
+    "expected_brands": [
+      "Neutrogena",
+      "Cetaphil"
+    ],
+    "category": "Cosmetics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Should",
+          "lemma": "should",
+          "pos": "AUX",
+          "tag": "MD",
+          "dep": "aux",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "I",
+          "lemma": "I",
+          "pos": "PRON",
+          "tag": "PRP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "try",
+          "lemma": "try",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Neutrogena",
+          "lemma": "Neutrogena",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "face",
+          "lemma": "face",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "wash",
+          "lemma": "wash",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Cetaphil",
+          "lemma": "Cetaphil",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "sensitive",
+          "lemma": "sensitive",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "skin",
+          "lemma": "skin",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Neutrogena",
+          "label": "PRODUCT",
+          "start": 13,
+          "end": 23
+        },
+        {
+          "text": "Cetaphil",
+          "label": "PRODUCT",
+          "start": 37,
+          "end": 45
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Should"
+        ],
+        "PRON": [
+          "I"
+        ],
+        "VERB": [
+          "try"
+        ],
+        "PROPN": [
+          "Neutrogena",
+          "Cetaphil"
+        ],
+        "NOUN": [
+          "face",
+          "wash",
+          "skin"
+        ],
+        "CCONJ": [
+          "or"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "ADJ": [
+          "sensitive"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Which shampoo is better for dandruff: Head & Shoulders or Dove?",
+    "expected_brands": [
+      "Head & Shoulders",
+      "Dove"
+    ],
+    "category": "Cosmetics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Which",
+          "lemma": "which",
+          "pos": "DET",
+          "tag": "WDT",
+          "dep": "det",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "shampoo",
+          "lemma": "shampoo",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "better",
+          "lemma": "well",
+          "pos": "ADJ",
+          "tag": "JJR",
+          "dep": "acomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "dandruff",
+          "lemma": "dandruff",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": ":",
+          "lemma": ":",
+          "pos": "PUNCT",
+          "tag": ":",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Head",
+          "lemma": "Head",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "appos",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "&",
+          "lemma": "&",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Shoulders",
+          "lemma": "Shoulders",
+          "pos": "PROPN",
+          "tag": "NNPS",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Dove",
+          "lemma": "Dove",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Head & Shoulders",
+          "label": "PRODUCT",
+          "start": 38,
+          "end": 54
+        },
+        {
+          "text": "Dove",
+          "label": "PRODUCT",
+          "start": 58,
+          "end": 62
+        }
+      ],
+      "pos": {
+        "DET": [
+          "Which"
+        ],
+        "NOUN": [
+          "shampoo",
+          "dandruff"
+        ],
+        "AUX": [
+          "is"
+        ],
+        "ADJ": [
+          "better"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "PUNCT": [
+          ":",
+          "?"
+        ],
+        "PROPN": [
+          "Head",
+          "Shoulders",
+          "Dove"
+        ],
+        "CCONJ": [
+          "&",
+          "or"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "L'Oreal Paris vs MAC lipstick for long-lasting wear",
+    "expected_brands": [
+      "L'Oreal",
+      "MAC"
+    ],
+    "category": "Cosmetics",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "L'Oreal",
+          "lemma": "L'Oreal",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nmod",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Paris",
+          "lemma": "Paris",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nmod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "vs",
+          "lemma": "vs",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "MAC",
+          "lemma": "MAC",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "lipstick",
+          "lemma": "lipstick",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "long",
+          "lemma": "long",
+          "pos": "ADV",
+          "tag": "RB",
+          "dep": "advmod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "-",
+          "lemma": "-",
+          "pos": "PUNCT",
+          "tag": "HYPH",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "lasting",
+          "lemma": "last",
+          "pos": "VERB",
+          "tag": "VBG",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "wear",
+          "lemma": "wear",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "L'Oreal Paris",
+          "label": "ORG",
+          "start": 0,
+          "end": 13
+        },
+        {
+          "text": "MAC",
+          "label": "ORG",
+          "start": 17,
+          "end": 20
+        }
+      ],
+      "pos": {
+        "PROPN": [
+          "L'Oreal",
+          "Paris",
+          "MAC"
+        ],
+        "ADP": [
+          "vs",
+          "for"
+        ],
+        "NOUN": [
+          "lipstick",
+          "wear"
+        ],
+        "ADV": [
+          "long"
+        ],
+        "PUNCT": [
+          "-"
+        ],
+        "VERB": [
+          "lasting"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Is Britannia Marie better than Parle-G for tea time snacks?",
+    "expected_brands": [
+      "Britannia",
+      "Parle"
+    ],
+    "category": "FMCG",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Britannia",
+          "lemma": "Britannia",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Marie",
+          "lemma": "Marie",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "better",
+          "lemma": "well",
+          "pos": "ADJ",
+          "tag": "JJR",
+          "dep": "acomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "than",
+          "lemma": "than",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Parle",
+          "lemma": "Parle",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "-",
+          "lemma": "-",
+          "pos": "PUNCT",
+          "tag": "HYPH",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "G",
+          "lemma": "G",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "tea",
+          "lemma": "tea",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "time",
+          "lemma": "time",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "snacks",
+          "lemma": "snack",
+          "pos": "NOUN",
+          "tag": "NNS",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Britannia Marie",
+          "label": "ORG",
+          "start": 3,
+          "end": 18
+        },
+        {
+          "text": "Parle-G",
+          "label": "ORG",
+          "start": 31,
+          "end": 38
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Is"
+        ],
+        "PROPN": [
+          "Britannia",
+          "Marie",
+          "Parle",
+          "G"
+        ],
+        "ADJ": [
+          "better"
+        ],
+        "ADP": [
+          "than",
+          "for"
+        ],
+        "PUNCT": [
+          "-",
+          "?"
+        ],
+        "NOUN": [
+          "tea",
+          "time",
+          "snacks"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Compare Coca-Cola and Pepsi taste for parties",
+    "expected_brands": [
+      "Coca-Cola",
+      "Pepsi"
+    ],
+    "category": "FMCG",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Compare",
+          "lemma": "compare",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Coca",
+          "lemma": "Coca",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nmod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "-",
+          "lemma": "-",
+          "pos": "PUNCT",
+          "tag": "HYPH",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Cola",
+          "lemma": "Cola",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nmod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "and",
+          "lemma": "and",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Pepsi",
+          "lemma": "Pepsi",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "taste",
+          "lemma": "taste",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "parties",
+          "lemma": "party",
+          "pos": "NOUN",
+          "tag": "NNS",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Coca-Cola",
+          "label": "ORG",
+          "start": 8,
+          "end": 17
+        },
+        {
+          "text": "Pepsi",
+          "label": "ORG",
+          "start": 22,
+          "end": 27
+        }
+      ],
+      "pos": {
+        "VERB": [
+          "Compare"
+        ],
+        "PROPN": [
+          "Coca",
+          "Cola",
+          "Pepsi"
+        ],
+        "PUNCT": [
+          "-"
+        ],
+        "CCONJ": [
+          "and"
+        ],
+        "NOUN": [
+          "taste",
+          "parties"
+        ],
+        "ADP": [
+          "for"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Which instant noodles taste better: Maggi or Top Ramen?",
+    "expected_brands": [
+      "Maggi",
+      "Top Ramen"
+    ],
+    "category": "FMCG",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Which",
+          "lemma": "which",
+          "pos": "DET",
+          "tag": "WDT",
+          "dep": "det",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "instant",
+          "lemma": "instant",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "noodles",
+          "lemma": "noodle",
+          "pos": "NOUN",
+          "tag": "NNS",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "taste",
+          "lemma": "taste",
+          "pos": "VERB",
+          "tag": "VBP",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "better",
+          "lemma": "well",
+          "pos": "ADV",
+          "tag": "RBR",
+          "dep": "advmod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": ":",
+          "lemma": ":",
+          "pos": "PUNCT",
+          "tag": ":",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        },
+        {
+          "text": "Maggi",
+          "lemma": "Maggi",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "appos",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Top",
+          "lemma": "Top",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Ramen",
+          "lemma": "Ramen",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Maggi",
+          "label": "PRODUCT",
+          "start": 36,
+          "end": 41
+        },
+        {
+          "text": "Top Ramen",
+          "label": "PRODUCT",
+          "start": 45,
+          "end": 54
+        }
+      ],
+      "pos": {
+        "DET": [
+          "Which"
+        ],
+        "NOUN": [
+          "instant",
+          "noodles"
+        ],
+        "VERB": [
+          "taste"
+        ],
+        "ADV": [
+          "better"
+        ],
+        "PUNCT": [
+          ":",
+          "?"
+        ],
+        "PROPN": [
+          "Maggi",
+          "Top",
+          "Ramen"
+        ],
+        "CCONJ": [
+          "or"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Amul butter vs Mother Dairy for daily breakfast use",
+    "expected_brands": [
+      "Amul",
+      "Mother Dairy"
+    ],
+    "category": "FMCG",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Amul",
+          "lemma": "Amul",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "butter",
+          "lemma": "butter",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "vs",
+          "lemma": "vs",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Mother",
+          "lemma": "Mother",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Dairy",
+          "lemma": "Dairy",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "daily",
+          "lemma": "daily",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "breakfast",
+          "lemma": "breakfast",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "use",
+          "lemma": "use",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Mother Dairy",
+          "label": "ORG",
+          "start": 15,
+          "end": 27
+        }
+      ],
+      "pos": {
+        "PROPN": [
+          "Amul",
+          "Mother",
+          "Dairy"
+        ],
+        "NOUN": [
+          "butter",
+          "breakfast",
+          "use"
+        ],
+        "ADP": [
+          "vs",
+          "for"
+        ],
+        "ADJ": [
+          "daily"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Is Tropicana juice healthier than Real fruit juice?",
+    "expected_brands": [
+      "Tropicana",
+      "Real"
+    ],
+    "category": "FMCG",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Is",
+          "lemma": "be",
+          "pos": "AUX",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Tropicana",
+          "lemma": "Tropicana",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "juice",
+          "lemma": "juice",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "healthier",
+          "lemma": "healthy",
+          "pos": "ADJ",
+          "tag": "JJR",
+          "dep": "acomp",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "than",
+          "lemma": "than",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Real",
+          "lemma": "real",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "fruit",
+          "lemma": "fruit",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "juice",
+          "lemma": "juice",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Tropicana",
+          "label": "ORG",
+          "start": 3,
+          "end": 12
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Is"
+        ],
+        "PROPN": [
+          "Tropicana"
+        ],
+        "NOUN": [
+          "juice",
+          "fruit",
+          "juice"
+        ],
+        "ADJ": [
+          "healthier",
+          "Real"
+        ],
+        "ADP": [
+          "than"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Colgate Total vs Sensodyne for sensitive teeth protection",
+    "expected_brands": [
+      "Colgate",
+      "Sensodyne"
+    ],
+    "category": "Personal Care",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Colgate",
+          "lemma": "Colgate",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Total",
+          "lemma": "Total",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "vs",
+          "lemma": "vs",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Sensodyne",
+          "lemma": "Sensodyne",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "sensitive",
+          "lemma": "sensitive",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "teeth",
+          "lemma": "tooth",
+          "pos": "NOUN",
+          "tag": "NNS",
+          "dep": "compound",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "protection",
+          "lemma": "protection",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Colgate Total",
+          "label": "ORG",
+          "start": 0,
+          "end": 13
+        },
+        {
+          "text": "Sensodyne",
+          "label": "ORG",
+          "start": 17,
+          "end": 26
+        }
+      ],
+      "pos": {
+        "PROPN": [
+          "Colgate",
+          "Total",
+          "Sensodyne"
+        ],
+        "ADP": [
+          "vs",
+          "for"
+        ],
+        "ADJ": [
+          "sensitive"
+        ],
+        "NOUN": [
+          "teeth",
+          "protection"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Should I buy Dettol or Lifebuoy soap for antibacterial protection?",
+    "expected_brands": [
+      "Dettol",
+      "Lifebuoy"
+    ],
+    "category": "Personal Care",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Should",
+          "lemma": "should",
+          "pos": "AUX",
+          "tag": "MD",
+          "dep": "aux",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "I",
+          "lemma": "I",
+          "pos": "PRON",
+          "tag": "PRP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "buy",
+          "lemma": "buy",
+          "pos": "VERB",
+          "tag": "VB",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Dettol",
+          "lemma": "Dettol",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nmod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "or",
+          "lemma": "or",
+          "pos": "CCONJ",
+          "tag": "CC",
+          "dep": "cc",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "Lifebuoy",
+          "lemma": "Lifebuoy",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "conj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "soap",
+          "lemma": "soap",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "for",
+          "lemma": "for",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "antibacterial",
+          "lemma": "antibacterial",
+          "pos": "ADJ",
+          "tag": "JJ",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "protection",
+          "lemma": "protection",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Dettol",
+          "label": "PRODUCT",
+          "start": 13,
+          "end": 19
+        },
+        {
+          "text": "Lifebuoy",
+          "label": "PRODUCT",
+          "start": 23,
+          "end": 31
+        }
+      ],
+      "pos": {
+        "AUX": [
+          "Should"
+        ],
+        "PRON": [
+          "I"
+        ],
+        "VERB": [
+          "buy"
+        ],
+        "PROPN": [
+          "Dettol",
+          "Lifebuoy"
+        ],
+        "CCONJ": [
+          "or"
+        ],
+        "NOUN": [
+          "soap",
+          "protection"
+        ],
+        "ADP": [
+          "for"
+        ],
+        "ADJ": [
+          "antibacterial"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "Gillette razors vs Schick which gives smoother shave?",
+    "expected_brands": [
+      "Gillette",
+      "Schick"
+    ],
+    "category": "Personal Care",
+    "entity_extractor_output": {
+      "tokens": [
+        {
+          "text": "Gillette",
+          "lemma": "Gillette",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "razors",
+          "lemma": "razor",
+          "pos": "NOUN",
+          "tag": "NNS",
+          "dep": "dep",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "vs",
+          "lemma": "vs",
+          "pos": "ADP",
+          "tag": "IN",
+          "dep": "prep",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "Schick",
+          "lemma": "Schick",
+          "pos": "PROPN",
+          "tag": "NNP",
+          "dep": "pobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "which",
+          "lemma": "which",
+          "pos": "PRON",
+          "tag": "WDT",
+          "dep": "nsubj",
+          "is_alpha": true,
+          "is_stop": true
+        },
+        {
+          "text": "gives",
+          "lemma": "give",
+          "pos": "VERB",
+          "tag": "VBZ",
+          "dep": "ROOT",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "smoother",
+          "lemma": "smooth",
+          "pos": "ADJ",
+          "tag": "JJR",
+          "dep": "amod",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "shave",
+          "lemma": "shave",
+          "pos": "NOUN",
+          "tag": "NN",
+          "dep": "dobj",
+          "is_alpha": true,
+          "is_stop": false
+        },
+        {
+          "text": "?",
+          "lemma": "?",
+          "pos": "PUNCT",
+          "tag": ".",
+          "dep": "punct",
+          "is_alpha": false,
+          "is_stop": false
+        }
+      ],
+      "entities": [
+        {
+          "text": "Gillette",
+          "label": "PERSON",
+          "start": 0,
+          "end": 8
+        },
+        {
+          "text": "Schick",
+          "label": "PERSON",
+          "start": 19,
+          "end": 25
+        }
+      ],
+      "pos": {
+        "PROPN": [
+          "Gillette",
+          "Schick"
+        ],
+        "NOUN": [
+          "razors",
+          "shave"
+        ],
+        "ADP": [
+          "vs"
+        ],
+        "PRON": [
+          "which"
+        ],
+        "VERB": [
+          "gives"
+        ],
+        "ADJ": [
+          "smoother"
+        ],
+        "PUNCT": [
+          "?"
+        ]
+      }
+    }
+  }
+]
