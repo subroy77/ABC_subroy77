@@ -1,232 +1,144 @@
-# import os
-# import re
-# from typing import List, Dict, Optional
-# import numpy as np
-# from serpapi import GoogleSearch
-# import dspy
-# from sentence_transformers import SentenceTransformer
-
-# from brand_extraction.entity_extractor import extract_entities
-
-# # ------------------------------------------------------------
-# # Load embedding model for robust brand matching
-# # ------------------------------------------------------------
-# embed_model = SentenceTransformer("all-MiniLM-L6-v2")
-
-# KNOWN_BRANDS = [
-#     "Samsung","Apple","LG","Sony","Philips","Xiaomi","OnePlus","Google",
-#     "Nokia","Motorola","Dell","HP","Lenovo","Asus","Acer","Microsoft",
-#     "Realme","Oppo","Vivo"
-# ]
-# KNOWN_BRAND_EMB = embed_model.encode(KNOWN_BRANDS)
-
-# def cosine_sim(a,b):
-#     return np.dot(a,b) / (np.linalg.norm(a)*np.linalg.norm(b))
-
-# def vector_validate(token: str) -> Optional[str]:
-#     emb = embed_model.encode([token])[0]
-#     sims = [cosine_sim(emb, kb) for kb in KNOWN_BRAND_EMB]
-#     best = int(np.argmax(sims))
-#     if sims[best] > 0.55:
-#         return KNOWN_BRANDS[best]
-#     return None
-
-
-# # ------------------------------------------------------------
-# # Product → Brand Mapping
-# # ------------------------------------------------------------
-# PRODUCT_BRAND_MAP = {
-#     "fold": "Samsung", "galaxy": "Samsung", "note": "Samsung",
-#     "iphone": "Apple", "ipad": "Apple", "macbook": "Apple",
-#     "pixel": "Google", "redmi": "Xiaomi", "mi": "Xiaomi",
-#     "poco": "Xiaomi", "oneplus": "OnePlus",
-#     "moto": "Motorola", "motorola": "Motorola"
-# }
-
-# PRODUCT_REGEX = re.compile(
-#     r"\b(fold|galaxy|note|pixel|iphone|ipad|macbook|series|moto|oneplus|nokia|mi|redmi|poco)\s*\d*[a-zA-Z0-9-]*\b",
-#     re.I
-# )
-
-
-# # ------------------------------------------------------------
-# # DSPy Signature (restricted)
-# # ------------------------------------------------------------
-# class BrandDisambiguation(dspy.Signature):
-#     prompt = dspy.InputField()
-#     candidates = dspy.InputField()
-#     # only return VALID BRANDS as comma-separated tokens
-#     final_brands = dspy.OutputField(desc="Return ONLY brand names, comma-separated. No sentences.")
-
-
-# class BrandAgent:
-#     def __init__(self, serpapi_key=None):
-#         self.serpapi_key = serpapi_key or os.getenv("SERPAPI_API_KEY")
-#         self.cot = dspy.Predict(BrandDisambiguation)
-
-#     # --------------------------------------------------------
-#     # Step 1 — Extract candidates using NER + Regex
-#     # --------------------------------------------------------
-#     def extract_candidates(self, prompt: str) -> List[str]:
-#         ents = extract_entities(prompt)
-#         cands = set()
-
-#         for ent in ents.get("entities", []):
-#             if ent["label"] in ("ORG", "PRODUCT"):
-#                 cands.add(ent["text"])
-
-#         # product model tokens like “fold 7”
-#         for m in PRODUCT_REGEX.findall(prompt):
-#             cands.add(m)
-
-#         return list(cands)
-
-#     # --------------------------------------------------------
-#     # Step 2 — Normalize tokens into real brands
-#     # --------------------------------------------------------
-#     def normalize_candidates(self, tokens: List[str], prompt: str) -> List[str]:
-#         final = set()
-
-#         for t in tokens:
-#             low = t.lower()
-
-#             # product → brand mapping
-#             for key, brand in PRODUCT_BRAND_MAP.items():
-#                 if key in low:
-#                     final.add(brand)
-
-#             # vector similarity fallback
-#             guess = vector_validate(t)
-#             if guess:
-#                 final.add(guess)
-
-#         # also infer directly from text
-#         for b in KNOWN_BRANDS:
-#             if b.lower() in prompt.lower():
-#                 final.add(b)
-
-#         return list(final)
-
-#     # --------------------------------------------------------
-#     # Step 3 — Light evidence scoring
-#     # --------------------------------------------------------
-#     def gather_evidence(self, brands: List[str]) -> Dict[str, int]:
-#         scores = {b: 0 for b in brands}
-
-#         if not self.serpapi_key:
-#             return scores
-
-#         for b in brands:
-#             try:
-#                 search = GoogleSearch({
-#                     "engine": "google",
-#                     "q": f"{b} official",
-#                     "num": 2,
-#                     "api_key": self.serpapi_key
-#                 }).get_dict()
-
-#                 if "organic_results" in search:
-#                     scores[b] += len(search["organic_results"])
-#             except:
-#                 pass
-
-#         return scores
-
-#     # --------------------------------------------------------
-#     # Step 4 — Final DSPy CoT (restricted)
-#     # --------------------------------------------------------
-#     def cot_filter(self, prompt: str, brands: List[str]) -> List[str]:
-#         if not brands:
-#             return []
-
-#         cand_str = ",".join(brands)
-
-#         try:
-#             out = self.cot(prompt=prompt, candidates=cand_str)
-#             raw = out.final_brands
-
-#             # FORCE CLEAN LIST
-#             clean = [b for b in KNOWN_BRANDS if b.lower() in raw.lower()]
-#             if clean:
-#                 return clean
-#         except:
-#             pass
-
-#         return brands  # fallback
-
-#     # --------------------------------------------------------
-#     # Full Pipeline
-#     # --------------------------------------------------------
-#     def extract_brands(self, prompt: str) -> List[str]:
-#         candidates = self.extract_candidates(prompt)
-#         normalized = self.normalize_candidates(candidates, prompt)
-
-#         # evidence scoring
-#         scores = self.gather_evidence(normalized)
-
-#         # rank brands
-#         ranked = sorted(normalized, key=lambda b: -scores[b])
-
-#         # DSPy final filter
-#         final = self.cot_filter(prompt, ranked)
-
-#         return list(dict.fromkeys(final))
-
-# import dspy
-
-# # Define signature
-# class BrandExtractionSignature(dspy.Signature):
-#     """Extract the Brand name from user text"""
-#     prompt = dspy.InputField(desc="The text containing pbrand name")
-#     brand = dspy.OutputField(desc="Brand name like Samsung, Apple, etc.")
-
-# class BrandAgent:
-#     def __init__(self):
-#         self.predictor = dspy.Predict(BrandExtractionSignature)
-
-#     def extract_brand(self, prompt: str):
-#         result = self.predictor(prompt=prompt)
-#         return result.brand.strip()
-
+import os
+from serpapi import GoogleSearch
 import dspy
+import re
 from brand_extraction.entity_extractor import extract_entities
 
-# dspy signature for validating + cleaning brand candidates
-class BrandValidationSignature(dspy.Signature):
-    """Given entity candidates, return only real brands."""
-    entities = dspy.InputField(desc="List of entity candidates extracted using NER")
-    text = dspy.InputField(desc="Original user query")
-    brands = dspy.OutputField(desc="A clean list of brand names present in the text")
+# --------------------------
+# DSPy Signature
+# --------------------------
+class ExtractBrandSLM(dspy.Signature):
+    prompt = dspy.InputField()
+    brands = dspy.OutputField(desc="Comma-separated list of brand/company names only. No sentences.")
+
+
+# --------------------------
+# Product → Brand Mapping
+# --------------------------
+PRODUCT_BRAND_MAP = {
+    "fold": "Samsung",
+    "galaxy": "Samsung",
+    "bravia": "Sony",
+    "xperia": "Sony",
+    "iphone": "Apple",
+    "ipad": "Apple",
+    "macbook": "Apple",
+    "tiktok": "ByteDance",
+    "youtube": "Google"
+}
+PRODUCT_REGEX = re.compile(r"\b(" + "|".join(PRODUCT_BRAND_MAP.keys()) + r")\w*\b", re.I)
 
 
 class BrandAgent:
-    def __init__(self):
-        self.validator = dspy.Predict(BrandValidationSignature)
 
-    def extract_brand(self, prompt: str):
-        # 1. Extract raw entities (SpaCy)
-        ner_result = extract_entities(prompt)
-        candidates = [ent["text"] for ent in ner_result["entities"]]
+    def __init__(self, serpapi_key=None):
+        self.serpapi_key = serpapi_key or os.getenv("SERPAPI_API_KEY")
+        self.slm = dspy.Predict(ExtractBrandSLM)
 
-        # Remove duplicates
-        candidates = list(set(candidates))
+    # ------------------------------------
+    # STEP 1: NER extraction
+    # ------------------------------------
+    def ner_extract(self, prompt: str):
+        ents = extract_entities(prompt)
+        out = []
+        for e in ents.get("entities", []):
+            if e["label"] in ("ORG", "PRODUCT"):
+                out.append(e["text"])
+        return out
 
-        # If no NER entities found, fallback to DSPy directly
-        if not candidates:
-            result = self.validator(entities=[], text=prompt)
-            return result.brands
+    # ------------------------------------
+    # STEP 2: DSPy extraction
+    # ------------------------------------
+    def slm_extract(self, prompt: str):
+        res = self.slm(prompt=prompt)
+        return [x.strip() for x in res.brands.split(",") if x.strip()]
 
-        # 2. Ask DSPy to filter which of these are actual brands
-        result = self.validator(
-            entities=candidates,
-            text=prompt
+    # ------------------------------------
+    # STEP 3: Product → Brand
+    # ------------------------------------
+    def resolve_products(self, prompt: str):
+        matches = PRODUCT_REGEX.findall(prompt.lower())
+        return [PRODUCT_BRAND_MAP[m.lower()] for m in matches]
+
+    # ------------------------------------
+    # STEP 4: SerpAPI validation
+    # ------------------------------------
+    def serpapi_validate(self, token: str) -> bool:
+        if not self.serpapi_key:
+            return True   # assume valid if SerpAPI disabled
+
+        queries = [
+            f"{token} official website",
+            f"{token} brand",
+            f"{token} company"
+        ]
+
+        for q in queries:
+            try:
+                search = GoogleSearch({
+                    "q": q,
+                    "engine": "google",
+                    "api_key": self.serpapi_key,
+                    "num": 3
+                }).get_dict()
+
+                if search.get("knowledge_graph", {}).get("type") in (
+                    "Organization", "Brand", "Company"
+                ):
+                    return True
+
+                if "organic_results" in search:
+                    title = search["organic_results"][0].get("title", "").lower()
+                    if token.lower() in title:
+                        return True
+
+            except:
+                pass
+
+        return False
+
+    # ------------------------------------
+    # CONFIDENCE CALCULATION
+    # ------------------------------------
+    def compute_confidence(self, brand, ner_list, slm_list, serp_valid):
+        ner_score = 1.0 if brand in ner_list else 0.0
+        slm_score = 1.0 if brand in slm_list else 0.0
+        serp_score = 1.0 if serp_valid else 0.0
+
+        final_score = (
+            0.4 * ner_score +
+            0.4 * slm_score +
+            0.2 * serp_score
         )
 
-        # Output is a list
-        if isinstance(result.brands, str):
-            # convert comma separated → list
-            brands = [b.strip() for b in result.brands.split(",") if b.strip()]
-        else:
-            brands = result.brands
+        return round(final_score, 3)
 
-        return brands
+    # ------------------------------------
+    # FINAL PIPELINE
+    # ------------------------------------
+    def extract_brands(self, prompt: str):
+        # Collect candidates
+        ner_cands = self.ner_extract(prompt)
+        slm_cands = self.slm_extract(prompt)
+        product_cands = self.resolve_products(prompt)
+
+        # Merge all
+        raw = set(ner_cands + slm_cands + product_cands)
+
+        results = []
+
+        for brand in raw:
+            serp_valid = self.serpapi_validate(brand)
+            conf = self.compute_confidence(
+                brand=brand,
+                ner_list=ner_cands,
+                slm_list=slm_cands,
+                serp_valid=serp_valid
+            )
+            results.append({"brand": brand, "confidence": conf})
+
+        # Sort brands by confidence descending
+        results = sorted(results, key=lambda x: x["confidence"], reverse=True)
+
+        return results
+# ============================================================
