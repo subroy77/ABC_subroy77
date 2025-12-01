@@ -1,0 +1,26 @@
+prompt_id,prompt_text,extracted_brands,extracted_category,processing_time_secs
+1,Are Samsung and LG making their media products more sustainable or energy-efficient?,LG (0.8) | Samsung (0.8),General,4.5302
+2,Are there any upcoming deals or discounts on smart TVs from Samsung or Philips?,Philips (0.8) | Samsung (0.8),Electronics,4.3093
+3,Can you compare the smart features of Samsung Smart TVs and Sony Bravia?,Samsung (0.8) | Sony (0.8) | Bravia (0.4) | Smart TVs (0.4),Electronics,7.7817
+4,Can you help me choose between Samsung’s The Frame and Sony’s A80L for a living room setup?,Samsung (0.8) | Sony (0.8) | A80L (0.4) | The Frame (0.4),General,7.3708
+5,Can you help me write a script for a podcast episode on media literacy?,NPR (0.4) | PBS (0.4),Education,4.8142
+6,Can you list the top-rated 4K projectors for home cinema from brands like Epson | LG or BenQ?,LG (0.4) | BenQ (0.4) | Epson (0.4) | {brands} (0.4),Electronics,24.0081
+7,Can you summarize the most discussed topics in entertainment news this week?,Netflix (0.4) | Disney+ (0.4) | HBO Max (0.4),Entertainment,6.1991
+8,How are augmented reality and virtual reality being used in media storytelling?,DreamWorks Animation (0.4) | Universal Pictures (0.4) | Pixar Animation Studios (0.4) | Walt Disney Company (0.4),General,7.3181
+9,How can we detect deepfakes and AI-generated misinformation in news media?,Google (0.4) | Facebook (0.4) | Twitter (0.4),General,6.8122
+10,How do algorithms on platforms like YouTube and Netflix influence what people watch?,Netflix (0.4) | YouTube (0.4) | Google (0.0),General,5.5988
+11,How does AI upscaling work in Samsung TVs and is it better than LG’s version?,LG (0.4) | Samsung (0.4) | Samsung Electronics (0.4) | LG Electronics (0.4),Electronics,6.7907
+12,I am getting sore eyes from watching tv. What can I do about this?,Foster Grant (0.4) | Bausch + Lomb (0.4),Electronics,4.9163
+13,Is the LG C3 OLED worth the upgrade from the LG CX?,LG (0.8) | C3 (0.4) | CX (0.4),Electronics,5.5274
+14,What are some innovative formats for interactive documentaries?,Disney Interactive Studios (0.4) | BBC Story Factory (0.4) | National Geographic Creative (0.4) | Pixar Animation Studios (0.4),General,7.9867
+15,What are the current trends in streaming services and how are they affecting traditional TV?,Amazon Prime Video (0.4) | Disney+ (0.4) | Hulu (0.4) | Netflix (0.4),Electronics,9.1128
+16,What are the ethical concerns around using AI to generate news articles?,Google News (0.4) | Facebook (0.4),General,4.0466
+17,What are the latest trends in smart TV technology from brands like Samsung and TCL?,Samsung Quantum Dot Display (0.4) | Samsung (0.4) | TCL (0.4) | TCL Mini LED TVs (0.4),Electronics,8.0235
+18,What are the most common issues users report with LG soundbars?,LG (0.8) | Sennheiser (0.4) | Harman Kardon (0.4) | Sony (0.4) | Bose (0.4),General,9.9449
+19,What are the pros and cons of buying a soundbar vs a full home theater system?,Yamaha (0.4) | Sonos (0.4) | Bose (0.4),General,5.5276
+20,What impact is AI having on journalism and news production?,Bloomberg (0.4) | Reuters Group Limited (0.4) | The New York Times Company (0.4),General,4.9157
+21,What voice assistants are compatible with Sony TVs and how do they enhance media control?,Amazon Echo Plus (with built-in Sony TV remote) (0.4) | Sony (0.4) | Google Assistant (0.4) | Sony's AI personal assistant Alexa (0.4),Electronics,11.058
+22,Which is better for home entertainment: Samsung QLED vs LG OLED TVs?,LG (0.8) | Samsung (0.8) | QLED (0.4),Electronics,5.0156
+23,Which is the best 65-inch TV under €1000 for watching sports?,Philips (0.4) | Samsung (0.4) | Vizio (0.4) | LG (0.4) | Sony (0.4) | TCL (0.4),Electronics,15.0511
+24,Which tablet is best for streaming and media editing: iPad Pro or Samsung Galaxy Tab?,Samsung (0.8) | Apple (0.4) | iPad Pro (0.4) | Galaxy Tab (0.4),Electronics,7.2702
+25,Why do people prefer short-form video content like TikTok over long-form formats?,TikTok (0.8) | YouTube (0.4) | ByteDance (0.0),General,7.2722

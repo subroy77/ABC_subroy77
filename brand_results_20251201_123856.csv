@@ -1,0 +1,4 @@
+prompt_id,prompt_text,extracted_brands,extracted_category,processing_time_secs
+1,Are Samsung and LG making their media products more sustainable or energy-efficient?,LG (0.8) | Samsung (0.8),General,5.1568
+2,Are there any upcoming deals or discounts on smart TVs from Samsung or Philips?,Philips (0.8) | Samsung (0.8),Electronics,6.5786
+3,Can you compare the smart features of Samsung Smart TVs and Sony Bravia?,Samsung (0.8) | Sony (0.8) | Bravia (0.4) | Smart TVs (0.4),Electronics,11.0585

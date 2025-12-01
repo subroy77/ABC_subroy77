@@ -1,0 +1,28 @@
+prompt_id,prompt_text,extracted_brands,extracted_category
+1,Are Samsung and LG making their media products more sustainable or energy-efficient?,LG (1.0) | Samsung (1.0),General
+2,Are there any upcoming deals or discounts on smart TVs from Samsung or Philips?,Philips (1.0) | Samsung (1.0),Electronics
+3,Can you compare the smart features of Samsung Smart TVs and Sony Bravia?,Samsung (1.0) | Sony (1.0) | Bravia (0.6) | Smart TVs (0.6),Electronics
+4,Can you help me choose between Samsung’s The Frame and Sony’s A80L for a living room setup?,Sony (1.0) | Samsung (1.0) | A80L (0.6) | The Frame (0.6),General
+5,Can you help me write a script for a podcast episode on media literacy?,NPR (0.6) | PBS (0.6),Education
+6,Can you list the top-rated 4K projectors for home cinema from brands like Epson,"Epson (0.6) | {brands} (0.4) | no additional information or sentences are required for these fields only company names should be listed without repetition and ensuring the list is not exhaustive. The `completed` field will signal completion of your response with a unique marker that does not interfenerate with any brand name provided in the brands section.
+
+### User: (0.4) | separated by commas (0.4)",Electronics
+7,Can you summarize the most discussed topics in entertainment news this week?,HBO Max (0.6) | Disney+ (0.6) | Netflix (0.6),Entertainment
+8,How are augmented reality and virtual reality being used in media storytelling?,DreamWorks Animation (0.6) | Universal Pictures (0.6) | Walt Disney Company (0.6) | Pixar Animation Studios (0.6),General
+9,How can we detect deepfakes and AI-generated misinformation in news media?,Facebook (0.6) | Google (0.6) | Twitter (0.6),General
+10,How do algorithms on platforms like YouTube and Netflix influence what people watch?,YouTube (0.6) | Netflix (0.6) | Google (0.2),General
+11,How does AI upscaling work in Samsung TVs and is it better than LG’s version?,Samsung Electronics (0.6) | LG Electronics (0.6) | LG (0.6) | Samsung (0.6),Electronics
+12,I am getting sore eyes from watching tv. What can I do about this?,Bausch + Lomb (0.6) | Foster Grant (0.6),Electronics
+13,Is the LG C3 OLED worth the upgrade from the LG CX?,LG (1.0) | CX (0.6) | C3 (0.6),Electronics
+14,What are some innovative formats for interactive documentaries?,Disney Interactive Studios (0.6) | Pixar Animation Studios (0.6) | BBC Story Factory (0.4) | National Geographic Creative (0.4),General
+15,What are the current trends in streaming services and how are they affecting traditional TV?,Hulu (0.6) | Disney+ (0.6) | Netflix (0.6) | Amazon Prime Video (0.4),Electronics
+16,What are the ethical concerns around using AI to generate news articles?,Facebook (0.6) | Google News (0.6),General
+17,What are the latest trends in smart TV technology from brands like Samsung and TCL?,TCL (0.6) | Samsung (0.6) | Samsung Quantum Dot Display (0.4) | TCL Mini LED TVs (0.4),Electronics
+18,What are the most common issues users report with LG soundbars?,LG (1.0) | Sennheiser (0.6) | Bose (0.6) | Harman Kardon (0.6) | Sony (0.6),General
+19,What are the pros and cons of buying a soundbar vs a full home theater system?,Yamaha (0.6) | Sonos (0.6) | Bose (0.6),General
+20,What impact is AI having on journalism and news production?,The New York Times Company (0.6) | Bloomberg (0.6) | Reuters Group Limited (0.4),General
+21,What voice assistants are compatible with Sony TVs and how do they enhance media control?,Sony (0.6) | Sony's AI personal assistant Alexa (0.4) | Google Assistant (0.4) | Amazon Echo Plus (with built-in Sony TV remote) (0.4),Electronics
+22,Which is better for home entertainment: Samsung QLED vs LG OLED TVs?,LG (1.0) | Samsung (1.0) | QLED (0.4),Electronics
+23,Which is the best 65-inch TV under €1000 for watching sports?,Philips (0.6) | Samsung (0.6) | Sony (0.6) | TCL (0.6) | LG (0.6) | Vizio (0.4),Electronics
+24,Which tablet is best for streaming and media editing: iPad Pro or Samsung Galaxy Tab?,Samsung (1.0) | Apple (0.4) | Galaxy Tab (0.4) | iPad Pro (0.4),Electronics
+25,Why do people prefer short-form video content like TikTok over long-form formats?,TikTok (0.8) | YouTube (0.6) | ByteDance (0.0),General

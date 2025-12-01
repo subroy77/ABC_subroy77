@@ -1,0 +1,3 @@
+prompt_id,prompt_text,extracted_brands,extracted_category
+1,Are Samsung and LG making their media products more sustainable or energy-efficient?,LG (1.0) | Samsung (1.0),General
+2,Are there any upcoming deals or discounts on smart TVs from Samsung or Philips?,Samsung (1.0) | Philips (1.0),Electronics

@@ -7,6 +7,8 @@ import json
 import csv
 from datetime import datetime
 import re
+import time
+import statistics
 
 load_dotenv()
 
@@ -90,11 +92,12 @@ def init_csv():
             "prompt_id",
             "prompt_text",
             "extracted_brands",
-            "extracted_category"
+            "extracted_category",
+            "processing_time_secs"
         ])
 
 
-def append_row(prompt_id, prompt_text, brands, category):
+def append_row(prompt_id, prompt_text, brands, category, processing_time):
     """
     Append a single result row.
     brands = list of {brand, confidence}
@@ -109,18 +112,22 @@ def append_row(prompt_id, prompt_text, brands, category):
             prompt_id,
             prompt_text,
             brand_str,
-            category
+            category,
+            round(processing_time, 4)
         ])
 
 
 # ============================================================
-#  MAIN EXECUTION
+#  MAIN EXECUTION WITH PERFORMANCE PROFILING
 # ============================================================
 def main():
     brand_agent = BrandAgent()
     category_agent = CategoryAgent()
 
     init_csv()
+
+    total_start = time.time()
+    per_prompt_times = []
 
     for item in prompts_list:
         prompt_id = item.get("prompt_id")
@@ -129,6 +136,8 @@ def main():
         print("\n" + "=" * 60)
         print(f"Processing prompt_id={prompt_id}")
         print(f"Prompt: {prompt_text}")
+
+        prompt_start = time.time()
 
         # Brand extraction with confidence scores
         try:
@@ -144,15 +153,41 @@ def main():
             print(f"[ERROR] Category extraction failed for prompt_id={prompt_id}: {e}")
             category = "General"
 
+        prompt_end = time.time()
+        elapsed = prompt_end - prompt_start
+        per_prompt_times.append(elapsed)
+
         # Print debug info
         print("→ Brands:")
         for b in brands:
             print(f"   - {b['brand']} (confidence: {b['confidence']})")
 
         print(f"→ Category: {category}")
+        print(f"→ Processing time: {elapsed:.4f} seconds")
 
         # Save row
-        append_row(prompt_id, prompt_text, brands, category)
+        append_row(prompt_id, prompt_text, brands, category, elapsed)
+
+    total_end = time.time()
+    total_runtime = total_end - total_start
+
+    # ============================================================
+    # PERFORMANCE SUMMARY
+    # ============================================================
+    print("\n" + "=" * 60)
+    print("               PERFORMANCE SUMMARY")
+    print("=" * 60)
+
+    avg_time = sum(per_prompt_times) / len(per_prompt_times)
+    projected_100k = avg_time * 100000
+
+    print(f"Total runtime: {total_runtime:.2f} seconds")
+    print(f"Avg time per prompt: {avg_time:.4f} seconds")
+    print(f"Fastest prompt: {min(per_prompt_times):.4f} seconds")
+    print(f"Slowest prompt: {max(per_prompt_times):.4f} seconds")
+    print(f"P95 latency: {statistics.quantiles(per_prompt_times, n=100)[94]:.4f} seconds")
+    print(f"P99 latency: {statistics.quantiles(per_prompt_times, n=100)[98]:.4f} seconds")
+    print(f"Projected time for 100,000 prompts: {projected_100k/3600:.2f} hours")
 
     print(f"\nCSV saved as: {csv_filename}\n")
 
