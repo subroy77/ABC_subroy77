@@ -40,41 +40,19 @@ def invoke_bedrock_model(user_prompt, custom_system_prompt=None):
                 "content": user_prompt
             }
         ],
-        "max_tokens": 512,
-        "temperature": 0.5,
-        "top_p": 0.95
+        "max_completion_tokens": 150,
+        "temperature": 0.7,
+        "top_p": 0.9
     }
     
     body = json.dumps(payload)
     
-    try:
-        response = bedrock.invoke_model(
-            modelId=model_id,
-            body=body,
-            contentType="application/json",
-            accept="application/json"
-        )
-        
-        response_body = response['body'].read().decode('utf-8')
-        print(f"[DEBUG] Raw response: {response_body}")
-        
-        if not response_body.strip():
-            print("[DEBUG] Empty response body")
-            return {}
-        
-        response_data = json.loads(response_body)
-        response_text = response_data.get("choices", [{}])[0].get("message", {}).get("content", "")
-        
-        if not response_text.strip():
-            print("[DEBUG] Empty response text")
-            return {}
-        
-        print(f"[DEBUG] Response text: {response_text}")
-        return json.loads(response_text)
-    
-    except json.JSONDecodeError as je:
-        print(f"Error parsing JSON response: {je}")
-        return {}
-    except Exception as e:
-        print(f"Error invoking Bedrock model: {e}")
-        return {}
+    response = bedrock.invoke_model(
+    modelId=model_id,
+    body=body
+    )
+
+    response_body = json.loads(response['body'].read().decode('utf-8'))
+
+    for choice in response_body['choices']:
+        print(choice['message']['content'])
