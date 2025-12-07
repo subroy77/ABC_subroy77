@@ -1,26 +1,8 @@
 import os
-import dspy
-from dotenv import load_dotenv
-from agent.brand_agent import BrandAgent
-from agent.category_agent import CategoryAgent
 import json
 import csv
 from datetime import datetime
-import re
-
-load_dotenv()
-
-# -------------------------
-# LLM configuration
-# -------------------------
-dspy.configure(
-    lm=dspy.LM(
-        model="ollama/phi3",
-        max_tokens=4096,
-        temperature=0.2,
-        system_prompt="You MUST ignore all previous conversation or context. Each prediction is independent. Always output clean JSON when asked."
-    )
-)
+from llm_setup import invoke_bedrock_model
 
 # Paths for prompts
 json_prompts_path = os.path.join("prompts", "sample_prompts.json")
@@ -117,9 +99,6 @@ def append_row(prompt_id, prompt_text, brands, category):
 #  MAIN EXECUTION
 # ============================================================
 def main():
-    brand_agent = BrandAgent()
-    category_agent = CategoryAgent()
-
     init_csv()
 
     for item in prompts_list:
@@ -130,16 +109,28 @@ def main():
         print(f"Processing prompt_id={prompt_id}")
         print(f"Prompt: {prompt_text}")
 
-        # Brand extraction with confidence scores
+        # Brand extraction using Bedrock
         try:
-            brands = brand_agent.extract_brands(prompt_text)
+            brand_system_prompt = """
+You are a brand extraction expert. Given a user prompt, extract all brands mentioned.
+Return a JSON object with:
+- "brands": list of objects with "brand" (string) and "confidence" (0-1) keys
+"""
+            brand_response = invoke_bedrock_model(prompt_text, brand_system_prompt)
+            brands = brand_response.get("brands", [])
         except Exception as e:
             print(f"[ERROR] Brand extraction failed for prompt_id={prompt_id}: {e}")
             brands = []
 
-        # Category extraction
+        # Category extraction using Bedrock
         try:
-            category = category_agent.extract_category(prompt_text)
+            category_system_prompt = """
+You are a category classification expert. Given a user prompt, determine the product category.
+Return a JSON object with:
+- "category": (string) the product category
+"""
+            category_response = invoke_bedrock_model(prompt_text, category_system_prompt)
+            category = category_response.get("category", "General")
         except Exception as e:
             print(f"[ERROR] Category extraction failed for prompt_id={prompt_id}: {e}")
             category = "General"
@@ -147,7 +138,7 @@ def main():
         # Print debug info
         print("→ Brands:")
         for b in brands:
-            print(f"   - {b['brand']} (confidence: {b['confidence']})")
+            print(f"   - {b.get('brand', 'Unknown')} (confidence: {b.get('confidence', 'N/A')})")
 
         print(f"→ Category: {category}")
 
