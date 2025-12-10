@@ -1,14 +1,17 @@
 import os
 import dspy
-from dotenv import load_dotenv
-from agent.brand_agent import BrandAgent
-from agent.category_agent import CategoryAgent
+import pandas as pd
 import json
 import csv
-from datetime import datetime
-import re
 import time
 import statistics
+from dotenv import load_dotenv
+from datetime import datetime
+#--------- Custom Agents -----------
+from agent.brand_agent import BrandAgent
+from agent.category_agent import CategoryAgent
+#--------- Brand JSON Cleaner ----------
+from brand_extraction.entity_extractor import safe_extract_brands
 
 load_dotenv()
 
@@ -24,58 +27,26 @@ dspy.configure(
     )
 )
 
-# Paths for prompts
-json_prompts_path = os.path.join("prompts", "sample_prompts.json")
-csv_prompts_path = os.path.join("prompts", "prompts.csv")
+# Paths for Prompts
+input_path = os.getenv("ABC_INPUT_FILE", "").strip()
+if not input_path:
+    raise ValueError("ABC_INPUT_FILE must be set to a CSV file path.")
 
-# Load prompts: prefer CSV if exists, otherwise JSON
+df = pd.read_csv(input_path)
+
+required_cols = ["measurement_date", "type", "device_id", "app_website_id", "timestamp", "prompt"]
+for col in required_cols:
+    if col not in df.columns:
+        raise KeyError(f"Missing required column: {col}")
+
 prompts_list = []
+for i, row in df.iterrows():
+    prompts_list.append({
+        "prompt_id": i + 1,
+        "prompt_text": str(row["prompt"])
+    })
 
-if os.path.exists(csv_prompts_path):
-    print(f"Found CSV prompts at: {csv_prompts_path} — loading CSV")
-    with open(csv_prompts_path, newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            text = row.get("text") or row.get("prompt") or row.get("query") or ""
-            pid = row.get("id") or row.get("prompt_id") or ""
-            ts = row.get("timestamp") or row.get("time") or ""
-            if not pid:
-                pid = str(len(prompts_list) + 1)
-            prompts_list.append({
-                "prompt_id": pid,
-                "prompt_text": text.strip(),
-                "timestamp": ts
-            })
-
-elif os.path.exists(json_prompts_path):
-    print(f"CSV not found. Loading JSON prompts at: {json_prompts_path}")
-    with open(json_prompts_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-        if isinstance(data, list):
-            for i, item in enumerate(data, start=1):
-                if isinstance(item, str):
-                    prompts_list.append({
-                        "prompt_id": str(i),
-                        "prompt_text": item.strip()
-                    })
-                elif isinstance(item, dict):
-                    text = item.get("prompt") or item.get("text") or item.get("query") or ""
-                    pid = item.get("id") or str(i)
-                    ts = item.get("timestamp") or item.get("time") or ""
-                    prompts_list.append({
-                        "prompt_id": str(pid),
-                        "prompt_text": text.strip(),
-                        "timestamp": ts
-                    })
-                else:
-                    continue
-        else:
-            raise ValueError("JSON prompts file must contain a list.")
-
-else:
-    raise FileNotFoundError(f"Neither {csv_prompts_path} nor {json_prompts_path} were found.")
-
-print(f"Loaded {len(prompts_list)} prompts to process.")
+print(f"Loaded {len(prompts_list)} prompts from {input_path}")
 
 # ============================================================
 #  write output to CSV
@@ -98,13 +69,7 @@ def init_csv():
 
 
 def append_row(prompt_id, prompt_text, brands, category, processing_time):
-    """
-    Append a single result row.
-    brands = list of {brand, confidence}
-    """
-    brand_str = " | ".join(
-        [f"{b['brand']} ({b['confidence']})" for b in brands]
-    )
+    brand_str = json.dumps(brands, ensure_ascii=False)
 
     with open(csv_filename, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -118,7 +83,7 @@ def append_row(prompt_id, prompt_text, brands, category, processing_time):
 
 
 # ============================================================
-#  MAIN EXECUTION WITH PERFORMANCE PROFILING
+#  Main Execution with Performance Profiling
 # ============================================================
 def main():
     brand_agent = BrandAgent()
@@ -141,7 +106,8 @@ def main():
 
         # Brand extraction with confidence scores
         try:
-            brands = brand_agent.extract_brands(prompt_text)
+            raw = brand_agent.extract_brands(prompt_text)
+            brands = safe_extract_brands(json.dumps(raw))
         except Exception as e:
             print(f"[ERROR] Brand extraction failed for prompt_id={prompt_id}: {e}")
             brands = []
@@ -172,7 +138,7 @@ def main():
     total_runtime = total_end - total_start
 
     # ============================================================
-    # PERFORMANCE SUMMARY
+    # Performance Summary
     # ============================================================
     print("\n" + "=" * 60)
     print("               PERFORMANCE SUMMARY")
@@ -188,8 +154,25 @@ def main():
     print(f"P95 latency: {statistics.quantiles(per_prompt_times, n=100)[94]:.4f} seconds")
     print(f"P99 latency: {statistics.quantiles(per_prompt_times, n=100)[98]:.4f} seconds")
     print(f"Projected time for 100,000 prompts: {projected_100k/3600:.2f} hours")
-
+    
     print(f"\nCSV saved as: {csv_filename}\n")
+
+    # ============================================================
+    # Upload Output to S3 Bucket
+    # ============================================================
+    bucket = os.getenv("ABC_S3_BUCKET")
+    prefix = os.getenv("ABC_S3_PREFIX", "niq_output/")
+
+    if bucket:
+        try:
+            import boto3
+            s3 = boto3.client("s3")
+            s3.upload_file(csv_filename, bucket, prefix + csv_filename)
+            print(f"[SUCCESS] Uploaded to s3://{bucket}/{prefix}{csv_filename}")
+        except Exception as e:
+            print(f"[S3 ERROR] {e}")
+    else:
+        print("[S3] Upload skipped. Set ABC_S3_BUCKET to enable upload.")
 
 
 if __name__ == "__main__":
